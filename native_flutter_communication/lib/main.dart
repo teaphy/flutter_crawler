@@ -1,53 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:native_flutter_communication/method_channel_page.dart';
+import 'package:native_flutter_communication/home_page.dart';
 
-void main() => runApp(MyApp());
+import 'channel/edit_platform_plugin.dart';
+
+void main() {
+  
+  
+  runApp(MyApp());
+  
+  // 初始化Plugin必须放在runApp()之后，否则会报错
+  initPlatformPlugin();
+}
+
+void initPlatformPlugin() async {
+  editMethodChannel.setMethodCallHandler(editChannelHandler);
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'PlatformChannelCrawler',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-              onPressed: () => Navigator.push(context, MaterialPageRoute(
-                builder: (context) => MethodChannelPage()
-              )),
-              child: Text("MethodChannel"),
-            )
-          ],
-        ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      home: HomePage(),
     );
   }
 }
